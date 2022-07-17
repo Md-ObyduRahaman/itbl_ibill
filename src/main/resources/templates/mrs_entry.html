@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="www.thymeleaf.org">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description"
+		content="Responsive sidebar template with sliding effect and dropdown menu based on bootstrap 3">
+	<title>iBill</title>
+
+	<!-- using online links -->
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css"
+		integrity="sha384-oS3vJWv+0UjzBfQzYUhtDYW+Pj2yciDJxpsK1OYPAYjqT085Qq/1cq5FLXAZQ7Ay" crossorigin="anonymous">
+	<link rel="stylesheet" href="//malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.min.css">
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+	<!-- CSS only -->
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+
+	<!-- using local links -->
+	<!-- <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../node_modules/@fortawesome/fontawesome-free/css/all.min.css">
+    <link rel="stylesheet" href="../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.css"> -->
+
+	<link rel="stylesheet" href="../css/main.css">
+	<link rel="stylesheet" href="../css/sidebar-themes.css">
+	<link rel="stylesheet" href="../css/form-style.css">
+
+	<!-- datatable link  -->
+	<link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" />
+	<style>
+		table {
+			table-layout: fixed;
+			border-collapse: collapse;
+		}
+
+		th {
+			background-color: rgb(40, 136, 80);
+			color: #000000;
+			font-size: 0.8rem;
+			text-align: center;
+			border: 2px solid white;
+		}
+
+		tr {
+			background-color: #fafafa;
+			font-family: 'Montserrat', sans-serif;
+		}
+
+		tr:nth-child(even) {
+			background-color: #cdf3cd;
+		}
+
+		#myTable th {
+			background-color: rgb(40, 136, 80);
+			color: white;
+		}
+
+		#myTable td {
+			text-align: center;
+			border-color: transparent;
+		}
+
+		.select2-container .select2-selection--single {
+			height: 34px !important;
+		}
+
+		.select2-container--default .select2-selection--single {
+			border: 1px solid #ccc !important;
+			border-radius: 0px !important;
+		}
+
+
+
+		.readonly {
+			border: none;
+			background-color: transparent;
+			resize: none;
+			outline: none;
+		}
+
+
+		#myBtn {
+			display: none;
+			position: fixed;
+			bottom: 0px;
+			right: 25px;
+			z-index: 99;
+			font-size: 80px;
+			font-weight: bold;
+			border: none;
+			outline: none;
+			color: red;
+			cursor: pointer;
+			background-color: transparent;
+		}
+
+		#myBtn:hover {
+			animation: mymove 1s infinite;
+		}
+
+		@keyframes mymove {
+			50% {
+				bottom: 10px;
+			}
+
+			100% {
+				bottom: 0px;
+			}
+		}
+
+		#myBtn:active {
+			animation: mymove1 5s infinite;
+		}
+
+		@keyframes mymove1 {
+
+			100% {
+				bottom: 1000px;
+			}
+		}
+
+		#SaveButton {
+			position: fixed;
+			bottom: 120px;
+			right: 25px;
+			z-index: 99;
+			font-size: 25px;
+			font-weight: 900;
+			padding: 2px 5px;
+			cursor: pointer;
+			text-align: center;
+			text-decoration: none;
+			outline: none;
+			color: red;
+			background-color: transparent;
+			border: none;
+			border-radius: 5px;
+		}
+
+		#SaveButton:hover {
+			background-color: #3e8e41;
+			color: #fff;
+			font-weight: normal;
+			box-shadow: 0 5px #999;
+		}
+
+		#SaveButton:active {
+			background-color: #3e8e41;
+			box-shadow: 0 5px #666;
+			transform: translateY(4px);
+		}
+
+		.sticky {
+			position: -webkit-sticky;
+			position: sticky;
+			top: 0;
+		}
+	</style>
+</head>
+
+<body>
+	<div class="page-wrapper default-theme  bg1 toggled">
+		<nav id="sidebar" class="sidebar-wrapper d-inline-flex"
+			style="box-shadow: 0px 2px 22px 0 rgb(0 0 0 / 20%), 0px 2px 30px 0 rgb(0 0 0 / 35%);">
+			<div class="sidebar-content">
+				<!-- sidebar-brand  -->
+				<div class="sidebar-item sidebar-brand">
+					<a href='../Home' class="text-center">
+						<img src='../../../../img/ibill.png' alt="" height="100px" width="120px">
+					</a>
+				</div><!-- sidebar-search  -->
+				<div class="sidebar-item sidebar-search">
+					<div style='text-align: center;color:white;font-size:20px;font-weight: bold;'>
+						<span>BPDB</span>
+					</div>
+				</div>
+				<!-- sidebar-menu  -->
+				<div class=" sidebar-item sidebar-menu">
+					<ul>
+						<li>
+							<a href="../../../mrs_entry">
+								<i class="fas fa-angle-down"></i>
+								<span class="menu-text" style="color:white">Dash board</span>
+							</a>
+						</li>
+						<li>
+							<a href="../../../logout">
+								<i class="fas fa-sign-out-alt"></i>
+								<span class="menu-text" style="color:white">Sign Out</span>
+							</a>
+						</li>
+					</ul>
+				</div>
+				<!-- sidebar-menu  -->
+			</div>
+			<!-- sidebar-footer  -->
+
+		</nav>
+
+
+		<!-- page-content  -->
+		<main class="page-content">
+			<div id="overlay" class="overlay"></div>
+			<div class="container-fluid" style="padding: 0px;">
+				<div class="title-bar"
+					style="height: 90px; background-image: url(../img/bn.jpeg) !important;background-repeat: no-repeat;width: 100%;height: 100%;background-size: cover;">
+					<a id="toggle-sidebar" class="btn btn-secondary rounded-0" href="#"
+						style="margin: 20px; background: #3ab54a;">
+						<span><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+								class="bi bi-list" viewBox="0 0 16 16">
+								<path fill-rule="evenodd"
+									d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
+							</svg></span>
+					</a>
+				</div>
+				<div class="content sticky">
+
+					<h3 style="color:#3a6b35" align="center">MRS Entry</h3>
+
+
+					<form method="post" th:action="@{/mrs_entry}" th:object="${entryFormModel}">
+						<div class="form-row"
+							style="margin: 20px;box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);transition: 0.3s;border-radius: 5px;padding: 25px">
+
+							<div class="form-group col-md-1">
+								<label for="billCycle">Bill Cycle</label>
+								<!-- <input type="text" class="form-control" id="billCycle" placeholder="202204"> -->
+								<select id="billcycle" class="form-control" name="billcycle" required="required">
+									<option value="">Month</option>
+
+									<option th:each="b : ${billCycleModels}" th:value="${b.billcycle}"
+										th:text="${b.billcycle}"
+										th:selected="${b.billcycle}==${entryFormModel.billcycle}"></option>
+								</select>
+							</div>
+
+							<div class="form-group col-md-2">
+								<label for="location">Location</label>
+								<select id="location" class="form-control" name="location" required="required">
+									<option value="">Select Location</option>
+
+									<option th:each="b : ${locationModels}" th:value="${b.code}" th:text="${b.name}"
+										th:selected="${b.code}==${entryFormModel.location}"></option>
+								</select>
+
+							</div>
+
+							<div class="form-group col-md-2">
+								<label for="billGroup">Bill Group</label>
+								<select id="billgrp" class="form-control" name="billgrp" required="required">
+									<option value="">Select Bill Group</option>
+
+									<option th:each="b : ${billGroupModels}" th:value="${b.BILL_GROUP}"
+										th:text="${b.BILL_GRP_DESCR}"
+										th:selected="${b.BILL_GROUP}==${entryFormModel.billgrp}"></option>
+								</select>
+
+							</div>
+
+							<div class="form-group col-md-2">
+								<label for="book">Book</label>
+								<select id="book" class="form-control" name="book" required="required">
+									<option value="">Select Book</option>
+
+								</select>
+
+							</div>
+
+							<div class="form-group col-md-1">
+								<label for="walk_seq">WALK SEQ</label>
+								<input type="text" class="form-control" id="walkseq" name="walkseq"
+									th:value="*{walkseq}">
+
+							</div>
+							<div class="form-group col-md-2">
+								<label for="walk_seq">Selection Rules</label>
+								<select id="billgrp" class="form-control" name="wstype" required="required">
+
+									<option th:each="b : ${walkSeqModels}" th:value="${b.value}" th:text="${b.name}"
+										th:selected="${b.value}==${entryFormModel.wstype}"></option>
+								</select>
+
+							</div>
+							<div class="form-group col-md-1">
+								<label></label>
+								<button style="background-color: rgb(40, 136, 80); margin-top: 8px;" type="submit"
+									class="form-control btn btn-primary" id="load">Load</button>
+							</div>
+
+						</div>
+
+
+					</form>
+
+					<table id="myTable" class="table table-hover">
+						<thead>
+							<tr>
+
+								<!-- <th style="width: 50px;white-space:pre-line;">Walking Order</th> -->
+								<th rowspan="2"></th>
+								<th rowspan="2" style="width: 80px;white-space:pre-line;text-align: center;">Customer No
+								</th>
+								<th rowspan="2" style="width: 300px;white-space:pre-line;text-align: center;"><span
+										style="color:#E8630A;">Walking Order</span><span style="color:#F806CC;">
+										Customer Name</span>
+									<span style="color:#242F9B;"> Meter No</span><span style="color:#FA7D09;">
+										Tariff</span><span style="color:#581C0C;"> Pre Rdg. Date</span>
+								</th>
+
+								<th style="width: 270px;white-space:pre-line;" colspan="3">SR</th>
+								<th style="width: 270px;white-space:pre-line;" colspan="3">OFPK</th>
+								<th style="width: 270px;white-space:pre-line;" colspan="3">PK</th>
+
+								<th rowspan="2" style="width: 50px;white-space:pre-line;text-align: center;">Meter Con.
+								</th>
+								<th rowspan="2" style="width: 90px;white-space:pre-line;text-align: center;">Prv. Rdg.
+									Date</th>
+								<th rowspan="2"></th>
+							</tr>
+							<tr>
+
+								<th style="width: 90px;white-space:pre-line;">Present Reading</th>
+								<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
+								<th style="width: 90px;white-space:pre-line;">Advance</th>
+								<th style="width: 90px;white-space:pre-line;">Present Reading</th>
+								<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
+								<th style="width: 90px;white-space:pre-line;">Advance</th>
+								<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
+								<th style="width: 90px;white-space:pre-line;">Present Reading</th>
+								<th style="width: 90px;white-space:pre-line;">Advance</th>
+							</tr>
+
+						</thead>
+					</table>
+
+				</div>
+
+
+
+				<div style="overflow-y: scroll;" class="content ">
+
+					<form class="content h-50 d-inline-block" method="post" th:action="@{/updatemrs}"
+						th:object="${mrsEntryModels}">
+
+						<table id="myTable" class="table table-hover ">
+
+							<tbody>
+
+								<tr th:each="eachRow, iter : ${mrsEntryModels}">
+									<!-- <td style="width: 50px;padding:0;margin:0;" th:text="${eachRow.WALK_SEQ}"></td> -->
+									<td><input type="hidden" class="readonly" tabindex="-1" readonly="readonly"
+											th:value="${eachRow.CUST_ID}" name="CUST_ID" id="'CUST_ID" /></td>
+
+
+
+								
+									<input type="hidden" th:id="'CUSTOMER_NUM_'+${iter.index}" name="CUSTOMER_NUM"
+										th:value="${eachRow.CUSTOMER_NUM}" />
+									<input type="hidden" th:id="'WALK_SEQ_'+${iter.index}" name="WALK_SEQ"
+										th:value="${eachRow.WALK_SEQ}" />
+									<input type="hidden" th:id="'CUSTOMER_NAME_'+${iter.index}" name="CUSTOMER_NAME"
+										th:value="${eachRow.CUSTOMER_NAME}" />
+									<input type="hidden" th:id="'METER_NUM_'+${iter.index}" name="METER_NUM"
+										th:value="${eachRow.METER_NUM}" />
+									<input type="hidden" th:id="'TARIFF_'+${iter.index}" name="TARIFF"
+										th:value="${eachRow.TARIFF}" />
+									<input type="hidden" th:id="'PRE_RDG_DATE_'+${iter.index}" name="PRE_RDG_DATE"
+										th:value="${eachRow.PRE_RDG_DATE}" />
+
+
+
+
+
+
+
+
+
+
+									<td></td>
+
+
+
+
+									<td style="width: 300px;padding:0;margin:0;font-size: 12px;line-height: 1">
+										<span style="color:#E8630A;font-weight: bold;"
+											th:text="${eachRow.WALK_SEQ}+' '"></span><span
+											style="color:#F806CC;font-weight: bold;"
+											th:text="${eachRow.CUSTOMER_NAME}+' '"> </span>
+										<span style="color:#242F9B;font-weight: bold;"
+											th:text="${eachRow.METER_NUM}+' '"> </span><span
+											style="color:#FA7D09;font-weight: bold;" th:text="${eachRow.TARIFF}+' '">
+										</span><span style="color:#581C0C;font-weight: bold;"
+											th:text="${eachRow.PRE_RDG_DATE}"></span>
+									</td>
+									<!-- <td style="width: 90px;padding:0;margin:0;" th:text="${eachRow.METER_NUM}"></td>  -->
+									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+											th:tabindex="${eachRow.TOD_CODE}=='02'?'-1'"
+											th:readonly="${eachRow.TOD_CODE}=='02'"
+											th:type="${eachRow.TOD_CODE}=='02'?'text':'input'"
+											th:value="${eachRow.PRE_READING}" name="PRE_READING"
+											th:id="'PRE_READING_'+${iter.index}"
+											th:onclick="'validateNumber0('+${iter.index}+')'"
+											th:onkeyup="'validateNumber0('+${iter.index}+')'" size="11" maxlength="11"
+											oninput="limitDecimalPlaces(event, 4)"></td>
+									<td style="width: 90px;padding:0;margin:0;text-align: right"><input class="readonly"
+											tabindex="-1" readonly="readonly" style="width: 90px;direction: rtl;"
+											type="text" th:value="${eachRow.PREV_READING}" name="PREV_READING"
+											th:id="'PREV_READING_'+${iter.index}"></td>
+									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+											th:tabindex="${eachRow.TOD_CODE}=='02'?'-1'"
+											th:readonly="${eachRow.TOD_CODE}=='02'"
+											th:type="${eachRow.TOD_CODE}=='02'?'text':'input'" th:value="${eachRow.ADV}"
+											name="ADV" th:id="'ADV_'+${iter.index}"
+											th:onclick="'validateNumber0('+${iter.index}+')'"
+											th:onkeyup="'validateNumber0('+${iter.index}+')'" size="11" maxlength="11"
+											oninput="limitDecimalPlaces(event, 4)"></td>
+									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+											th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
+											th:readonly="${eachRow.TOD_CODE}=='01'"
+											th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
+											th:value="${eachRow.PRE_OFPK_RDNG}" name="PRE_OFPK_RDNG"
+											th:id="'PRE_OFPK_RDNG_'+${iter.index}"
+											th:onclick="'validateNumber1('+${iter.index}+')'"
+											th:onkeyup="'validateNumber1('+${iter.index}+')'" size="11" maxlength="11"
+											oninput="limitDecimalPlaces(event, 4)"></td>
+									<td style="width: 90px;padding:0;margin:0;text-align: right"><input class="readonly"
+											tabindex="-1" readonly="readonly" style="width: 90px;direction: rtl;"
+											type="text" th:value="${eachRow.PREV_OFPK_RDNG}" name="PREV_OFPK_RDNG"
+											th:id="'PREV_OFPK_RDNG_'+${iter.index}"></td>
+									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+											th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
+											th:readonly="${eachRow.TOD_CODE}=='01'"
+											th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
+											th:value="${eachRow.OFPK_ADV}" name="OFPK_ADV"
+											th:id="'OFPK_ADV_'+${iter.index}"
+											th:onclick="'validateNumber1('+${iter.index}+')'"
+											th:onkeyup="'validateNumber1('+${iter.index}+')'" size="11" maxlength="11"
+											oninput="limitDecimalPlaces(event, 4)"></td>
+									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+											th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
+											th:readonly="${eachRow.TOD_CODE}=='01'"
+											th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
+											th:value="${eachRow.PRE_PK_RDNG}" name="PRE_PK_RDNG"
+											th:id="'PRE_PK_RDNG_'+${iter.index}" size="11" maxlength="11"
+											th:onclick="'validateNumber2('+${iter.index}+')'"
+											th:onkeyup="'validateNumber2('+${iter.index}+')'"
+											oninput="limitDecimalPlaces(event, 4)"></td>
+									<td style="width: 90px;padding:0;margin:0;text-align: right"><input class="readonly"
+											tabindex="-1" readonly="readonly" style="width: 90px;direction: rtl;"
+											th:onclick="'formDisplay('+${iter.index}+')'" type="text"
+											th:value="${eachRow.PREV_PK_RDNG}" name="PREV_PK_RDNG"
+											th:id="'PREV_PK_RDNG_'+${iter.index}"></td>
+									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+											th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
+											th:readonly="${eachRow.TOD_CODE}=='01'"
+											th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
+											th:value="${eachRow.PK_ADV}" name="PK_ADV" th:id="'PK_ADV_'+${iter.index}"
+											size="11" maxlength="11" th:onclick="'validateNumber2('+${iter.index}+')'"
+											th:onkeyup="'validateNumber2('+${iter.index}+')'"
+											oninput="limitDecimalPlaces(event, 4)"></td>
+									<td style="width: 50px;padding:0;margin:0;"><input style="width: 50px;" type="input"
+											th:value="${eachRow.MTR_COND}" name="MTR_COND" id="MTR_COND" size="2"
+											th:onclick="'formDisplay('+${iter.index}+')'" maxlength="2"></td>
+									<td style="width: 90px;padding:0;margin:0;text-align: center;"
+										th:text="${eachRow.PRV_RDG_DATE}"></td>
+									<td style="padding:0;margin:0;"><input type="hidden"
+											th:value="${eachRow.BILL_CYCLE_CODE}" name="BILL_CYCLE_CODE"
+											id="BILL_CYCLE_CODE"></td>
+
+								</tr>
+
+
+
+							</tbody>
+
+						</table>
+						<input type="submit" value="Save" id="SaveButton" th:if="${flag} == '1' ">
+					</form>
+
+
+				</div>
+				<button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
+
+
+				<!-- Modal -->
+				<div th:if="${saveFlag} == '1' " class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 style="color: rgb(40, 136, 80)" class="modal-title" id="exampleModalLongTitle">
+									Message</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<h1 style="color: rgb(40, 136, 80)" th:text="${msg}"></h1>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModalCenter1" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 style="color: rgb(40, 136, 80)" class="modal-title" id="exampleModalLongTitle">
+									Message</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<h1 style="color: rgb(40, 136, 80)">Before you reload,Please Save </h1>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">NO</button>
+								<input class="btn btn-danger" name="reload" id="reload" type="submit" value="YES">
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<!-- Modal -->
+				<div class="modal fade" id="exampleModalCenter2" tabindex="-1" role="dialog"
+					aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+					<div class="modal-dialog modal-dialog-centered" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 style="color: rgb(40, 136, 80)" class="modal-title" id="exampleModalLongTitle">
+									Message</h5>
+								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<h1 style="color: rgb(40, 136, 80)">Before Save Please Check Reading</h1>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-primary" data-dismiss="modal">OK</button>
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+			</div>
+
+
+			<div class="row">
+				<footer class="bg-blue text-center text-lg-start  position-fixed fixed-bottom  "
+					style="background-color: transparent;">
+					<div class="container">
+						<div class="row bg-blue">
+
+
+
+							<form>
+								<div class="row bg-blue p-2" style="background-color: #3ab54a;">
+									<label class="form-label col-1" for="CustomerNo"><strong>Customer No</strong>
+										&nbsp</label>
+
+									<div class=" col-3">
+
+										<input class="form-control Customer_No" id="Customer_No" readonly>
+									</div>
+									<label class="form-label col-1" for="Walking_Order"><strong>Walking Order</strong>
+										&nbsp</label>
+
+									<div class=" col-3">
+
+										<input class="form-control Customer_No" id="WALK_SEQ" readonly>
+									</div>
+									<label class="form-label col-1" for="Customer_Name"><strong>Customer Name</strong>
+										&nbsp</label>
+
+									<div class=" col-3">
+
+										<input class="form-control Customer_No" id="CUSTOMER_NAME" readonly>
+									</div>
+									<label class="form-label col-1" for="Meter_No"><strong>Meter No</strong>
+										&nbsp</label>
+
+									<div class=" col-3">
+
+										<input class="form-control Customer_No" id="METER_NUM" readonly>
+									</div>
+									<label class="form-label col-1" for="Tariff"><strong>Tariff</strong>
+										&nbsp</label>
+
+									<div class=" col-3">
+
+										<input class="form-control Customer_No" id="TARIFF" readonly>
+									</div>
+									<label class="form-label col-1" for="Pre_Rdg_Date"><strong>Pre Rdg. Date</strong>
+										&nbsp</label>
+
+									<div class=" col-3">
+
+										<input class="form-control Customer_No" id="PRE_RDG_DATE">
+									</div>
+
+
+								</div>
+							</form>
+
+						</div>
+					</div>
+				</footer>
+			</div>
+		</main>
+		<!-- page-content" -->
+	</div>
+	<!-- page-wrapper -->
+
+	<!-- using online scripts -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+		integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous">
+		</script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+		integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous">
+		</script>
+	<script src="//malihu.github.io/custom-scrollbar/jquery.mCustomScrollbar.concat.min.js"></script>
+
+	<!-- using local scripts -->
+	<!-- <script src="../node_modules/jquery/dist/jquery.min.js"></script>
+    <script src="../node_modules/popper.js/dist/umd/popper.min.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="../node_modules/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar.concat.min.js"></script> -->
+
+
+	<script src="../js/main.js"></script>
+	<!-- datatable script  -->
+	<script th:inline="javascript">
+		let dataChange = 0;
+		let dataSave = 0;
+		$('#exampleModalCenter').modal('show')
+		$(document).ready(function () {
+			$("#location").change(function () {
+
+				$("#book").empty();
+
+
+
+				var x = $("#location").val();
+				var y = $("#billgrp").val();
+
+				if (x == "") {
+					$("#book").empty();
+					$("<option>").val("").text("Select Book").appendTo(DISTDropdown);
+				}
+				else {
+
+					var urlString = "/api/book/" + x + "/" + y;
+					console.log(urlString);
+
+					$.ajax({
+						method: "GET",
+						url: urlString
+					})
+						.done(function (responseJson) {
+
+							DISTDropdown = $("#book");
+
+							$("<option>").val("").text("Select book").appendTo(DISTDropdown);
+							$.each(responseJson, function (index, book) {
+								console.log(book);
+								$("<option>").val(book.billcycle).text(book.billcycle).appendTo(DISTDropdown);
+							});
+						})
+						.fail(function () {
+							//alert("Connection Error");
+						})
+				}
+
+
+			})
+		})
+
+
+
+
+		$(document).ready(function () {
+			$("#billgrp").change(function () {
+
+				$("#book").empty();
+
+
+
+				var x = $("#location").val();
+				var y = $("#billgrp").val();
+
+				if (x == "") {
+					$("#book").empty();
+					$("<option>").val("").text("Select Book").appendTo(ThanaDropdown);
+				}
+				else {
+
+					var urlString = "/api/book/" + x + "/" + y;
+					console.log(urlString);
+
+					$.ajax({
+						method: "GET",
+						url: urlString
+					})
+						.done(function (responseJson) {
+
+							ThanaDropdown = $("#book");
+
+							$("<option>").val("").text("Select book").appendTo(ThanaDropdown);
+							$.each(responseJson, function (index, book) {
+								console.log(book);
+								$("<option>").val(book.billcycle).text(book.billcycle).appendTo(ThanaDropdown);
+							});
+						})
+						.fail(function () {
+							//alert("Connection Error");
+						})
+				}
+
+
+			})
+		})
+		$(window).on('load', function () {
+			/*<![CDATA[*/
+
+			var boook = /*[[${boook}]]*/ null;
+
+			/*]]>*/
+			console.log(boook);
+			$("#book").empty();
+
+			var x = $("#location").val();
+			var y = $("#billgrp").val();
+
+			if (x == "") {
+				$("#book").empty();
+				$("<option>").val("").text("Select Book").appendTo(ThanaDropdown);
+			}
+			else {
+
+				var urlString = "/api/book/" + x + "/" + y;
+
+				$.ajax({
+					method: "GET",
+					url: urlString
+				})
+					.done(function (responseJson) {
+
+						ThanaDropdown = $("#book");
+
+						$("<option>").val("").text("Select book").appendTo(ThanaDropdown);
+						$.each(responseJson, function (index, book) {
+							$("<option>").val(book.billcycle).text(book.billcycle).appendTo(ThanaDropdown);
+						});
+
+						$(ThanaDropdown).val(boook);
+					})
+					.fail(function () {
+						//alert("Connection Error");
+					})
+			}
+		});
+
+
+
+
+
+		function validateNumber0(id) {
+			var PREV = document.getElementById('PREV_READING_' + id).value;
+
+			formDisplay(id);
+
+
+
+			var first = document.getElementById('PRE_READING_' + id).value;
+			var second = document.getElementById('ADV_' + id).value;
+			if (first != "" && second != "") {
+				if (first > 0 && second > 0) {
+					if (((first - PREV).toFixed(4)) - second == 0) {
+						document.getElementById('ADV_' + id).style.borderColor = "black";
+					} else {
+						dataSave = 1;
+						document.getElementById('ADV_' + id).style.borderColor = "red";
+					}
+				} else if (first == 0 && second == 0) {
+					dataSave = 1;
+					document.getElementById('ADV_' + id).style.borderColor = "red";
+				} else if (first > 0 && second == 0) {
+					dataSave = 1;
+					document.getElementById('ADV_' + id).style.borderColor = "red";
+				}
+				else if (first == 0 && second > 0) {
+					dataSave = 1;
+					document.getElementById('ADV_' + id).style.borderColor = "red";
+				}
+
+			} else if (first != "" || second != "") {
+				dataSave = 1;
+				document.getElementById('ADV_' + id).style.borderColor = "red";
+			} else {
+				document.getElementById('ADV_' + id).style.borderColor = "black";
+			}
+
+		}
+		function validateNumber1(id) {
+			var PREV = document.getElementById('PREV_OFPK_RDNG_' + id).value;
+
+			formDisplay(id);
+
+			var first = document.getElementById('PRE_OFPK_RDNG_' + id).value;
+			var second = document.getElementById('OFPK_ADV_' + id).value;
+			if (first != "" && second != "") {
+				if (first > 0 && second > 0) {
+					if (((first - PREV).toFixed(4)) - second == 0) {
+						document.getElementById('OFPK_ADV_' + id).style.borderColor = "black";
+					} else {
+						dataSave = 1;
+						document.getElementById('OFPK_ADV_' + id).style.borderColor = "red";
+					}
+				} else if (first == 0 && second == 0) {
+					dataSave = 1;
+					document.getElementById('OFPK_ADV_' + id).style.borderColor = "red";
+				} else if (first > 0 && second == 0) {
+					dataSave = 1;
+					document.getElementById('ADV_' + id).style.borderColor = "red";
+				}
+				else if (first == 0 && second > 0) {
+					dataSave = 1;
+					document.getElementById('ADV_' + id).style.borderColor = "red";
+				}
+
+			} else if (first != "" || second != "") {
+				dataSave = 1;
+				document.getElementById('OFPK_ADV_' + id).style.borderColor = "red";
+			} else {
+				document.getElementById('OFPK_ADV_' + id).style.borderColor = "black";
+			}
+
+
+		}
+		function validateNumber2(id) {
+			var PREV = document.getElementById('PREV_PK_RDNG_' + id).value;
+			var first = document.getElementById('PRE_PK_RDNG_' + id).value;
+			var second = document.getElementById('PK_ADV_' + id).value;
+			formDisplay(id);
+			if (first != "" && second != "") {
+				if (first > 0 && second > 0) {
+					if (((first - PREV).toFixed(4)) - second == 0) {
+						document.getElementById('PK_ADV_' + id).style.borderColor = "black";
+					} else {
+						dataSave = 1;
+						document.getElementById('PK_ADV_' + id).style.borderColor = "red";
+					}
+				} else if (first == 0 && second == 0) {
+					dataSave = 1;
+					document.getElementById('PK_ADV_' + id).style.borderColor = "red";
+				} else if (first > 0 && second == 0) {
+					dataSave = 1;
+					document.getElementById('ADV_' + id).style.borderColor = "red";
+				}
+				else if (first == 0 && second > 0) {
+					dataSave = 1;
+					document.getElementById('ADV_' + id).style.borderColor = "red";
+				}
+
+			} else if (first != "" || second != "") {
+				dataSave = 1;
+				document.getElementById('PK_ADV_' + id).style.borderColor = "red";
+			} else {
+				document.getElementById('PK_ADV_' + id).style.borderColor = "black";
+			}
+
+
+
+		}
+
+		$(document).keydown(function (e) {
+
+			// Set self as the current item in focus
+			var self = $(':focus'),
+				// Set the form by the current item in focus
+				form = self.parents('form:eq(0)'),
+				focusable;
+
+			// Array of Indexable/Tab-able items
+			focusable = form.find('input[type="input"]').filter(':visible');
+
+			function enterKey() {
+				if (e.which === 13 && !self.is('textarea,div[contenteditable=true]')) { // [Enter] key
+
+					// If not a regular hyperlink/button/textarea
+					if ($.inArray(self, focusable) && (!self.is('a,button'))) {
+						// Then prevent the default [Enter] key behaviour from submitting the form
+						e.preventDefault();
+					} // Otherwise follow the link/button as by design, or put new line in textarea
+
+					// Focus on the next item (either previous or next depending on shift)
+					focusable.eq(focusable.index(self) + (e.shiftKey ? -1 : 1)).focus();
+
+					return false;
+				}
+			}
+			// We need to capture the [Shift] key and check the [Enter] key either way.
+			if (e.shiftKey) {enterKey()} else {enterKey()}
+		});
+
+		//Get the button
+		var mybutton = document.getElementById("myBtn");
+
+		//When the user scrolls down 20px from the top of the document, show the button
+		window.onscroll = function () {scrollFunction()};
+
+		function scrollFunction() {
+			if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+				mybutton.style.display = "block";
+			} else {
+				mybutton.style.display = "none";
+			}
+		}
+
+		//When the user clicks on the button, scroll to the top of the document
+		function topFunction() {
+			document.body.scrollTop = 0;
+			document.documentElement.scrollTop = 0;
+		}
+
+
+
+		$(document).ready(function () {
+			$('[name^=MTR_COND]').keypress(validateNumber);
+			$('[name^=PK_ADV]').keypress(validateNumber);
+			$('[name^=PRE_READING]').keypress(validateNumber);
+			$('[name^=ADV]').keypress(validateNumber);
+			$('[name^=PRE_OFPK_RDNG]').keypress(validateNumber);
+			$('[name^=OFPK_ADV]').keypress(validateNumber);
+			$('[name^=PRE_PK_RDNG]').keypress(validateNumber);
+		});
+
+		function validateNumber(event) {
+			dataChange = 1;
+			var key = window.event ? event.keyCode : event.which;
+			if (event.keyCode === 8 || event.keyCode === 46) {
+				return true;
+			} else if (key < 48 || key > 57) {
+				return false;
+			} else {
+				return true;
+			}
+		};
+		document.querySelector('#load').addEventListener('click', function (event) {
+			if (dataChange > 0) {
+				event.preventDefault();
+				$('#exampleModalCenter1').modal('show');
+			}
+
+		});
+		document.querySelector('#reload').addEventListener('click', function (event) {
+			$('#exampleModalCenter1').modal('hide');
+			location.reload();
+
+		});
+		document.querySelector('#SaveButton').addEventListener('click', function (event) {
+
+			/*<![CDATA[*/
+
+			var mrsEntryModels = /*[[${mrsEntryModels}]]*/ null;
+
+
+			/*]]>*/
+			console.log(mrsEntryModels.length);
+			dataSave = 0;
+			for (var i = 0; i < mrsEntryModels.length; i++) {
+				if (mrsEntryModels[i].tod_CODE == '01') {
+					var PREV = document.getElementById('PREV_READING_' + i).value;
+					var first = document.getElementById('PRE_READING_' + i).value;
+					var second = document.getElementById('ADV_' + i).value;
+					if (first != "" && second != "") {
+						if (first > 0 && second > 0) {
+							if (((first - PREV).toFixed(4)) - second == 0) {
+								document.getElementById('ADV_' + i).style.borderColor = "black";
+							} else {
+								dataSave = 1;
+								document.getElementById('ADV_' + i).style.borderColor = "red";
+							}
+						} else if (first == 0 && second == 0) {
+							dataSave = 1;
+							document.getElementById('ADV_' + i).style.borderColor = "red";
+						} else if (first > 0 && second == 0) {
+							dataSave = 1;
+							document.getElementById('ADV_' + i).style.borderColor = "red";
+						}
+						else if (first == 0 && second > 0) {
+							dataSave = 1;
+							document.getElementById('ADV_' + i).style.borderColor = "red";
+						}
+
+					} else if (first != "" || second != "") {
+						dataSave = 1;
+						document.getElementById('ADV_' + i).style.borderColor = "red";
+					} else {
+						document.getElementById('ADV_' + i).style.borderColor = "black";
+					}
+				}
+				if (mrsEntryModels[i].tod_CODE == '02') {
+					var PREV = document.getElementById('PREV_OFPK_RDNG_' + i).value;
+					var first = document.getElementById('PRE_OFPK_RDNG_' + i).value;
+					var second = document.getElementById('OFPK_ADV_' + i).value;
+					if (first != "" && second != "") {
+						if (first > 0 && second > 0) {
+							if (((first - PREV).toFixed(4)) - second == 0) {
+								document.getElementById('OFPK_ADV_' + i).style.borderColor = "black";
+							} else {
+								dataSave = 1;
+								document.getElementById('OFPK_ADV_' + i).style.borderColor = "red";
+							}
+						} else if (first == 0 && second == 0) {
+							dataSave = 1;
+							document.getElementById('OFPK_ADV_' + i).style.borderColor = "red";
+						} else if (first > 0 && second == 0) {
+							dataSave = 1;
+							document.getElementById('OFPK_ADV_' + i).style.borderColor = "red";
+						}
+						else if (first == 0 && second > 0) {
+							dataSave = 1;
+							document.getElementById('OFPK_ADV_' + i).style.borderColor = "red";
+						}
+
+					} else if (first != "" || second != "") {
+						dataSave = 1;
+						document.getElementById('OFPK_ADV_' + i).style.borderColor = "red";
+					} else {
+						document.getElementById('OFPK_ADV_' + i).style.borderColor = "black";
+					}
+					var PREV = document.getElementById('PREV_PK_RDNG_' + i).value;
+					var first = document.getElementById('PRE_PK_RDNG_' + i).value;
+					var second = document.getElementById('PK_ADV_' + i).value;
+					if (first != "" && second != "") {
+						if (first > 0 && second > 0) {
+							if (((first - PREV).toFixed(4)) - second == 0) {
+								document.getElementById('PK_ADV_' + i).style.borderColor = "black";
+							} else {
+								dataSave = 1;
+								document.getElementById('PK_ADV_' + i).style.borderColor = "red";
+							}
+						} else if (first == 0 && second == 0) {
+							dataSave = 1;
+							document.getElementById('PK_ADV_' + i).style.borderColor = "red";
+						} else if (first > 0 && second == 0) {
+							dataSave = 1;
+							document.getElementById('PK_ADV_' + i).style.borderColor = "red";
+						}
+						else if (first == 0 && second > 0) {
+							dataSave = 1;
+							document.getElementById('PK_ADV_' + i).style.borderColor = "red";
+						}
+
+					} else if (first != "" || second != "") {
+						dataSave = 1;
+						document.getElementById('PK_ADV_' + i).style.borderColor = "red";
+					} else {
+						document.getElementById('PK_ADV_' + i).style.borderColor = "black";
+					}
+				}
+			}
+			if (dataSave == 1) {
+				event.preventDefault();
+				$('#exampleModalCenter2').modal('show');
+			}
+
+		});
+		function limitDecimalPlaces(e, count) {
+			if (e.target.value.indexOf('.') == -1) {return;}
+			if ((e.target.value.length - e.target.value.indexOf('.')) > count) {
+				e.target.value = parseFloat(e.target.value).toFixed(count);
+			}
+		}
+		$('input').keypress(function (e) {
+			var a = [];
+			var k = e.which;
+			if (e.charCode === 46) {
+				// if dot is the first symbol
+				if (e.target.value.length === 0) {
+					e.preventDefault();
+					return;
+				}
+
+				// if there are dots already 
+				if (e.target.value.indexOf('.') !== -1) {
+					e.preventDefault();
+					return;
+				}
+
+				a.push(e.charCode);
+			}
+			for (i = 48; i < 58; i++)
+				a.push(i);
+			if (!($.inArray(k, a) >= 0))
+				e.preventDefault();
+		});
+
+
+
+
+		function formDisplay(id) {
+
+			var Customer_No = document.getElementById('CUSTOMER_NUM_' + id).value;
+			var WALK_SEQ = document.getElementById('WALK_SEQ_' + id).value;
+			var CUSTOMER_NAME = document.getElementById('CUSTOMER_NAME_' + id).value;
+			var METER_NUM = document.getElementById('METER_NUM_' + id).value;
+			var PRE_RDG_DATE = document.getElementById('PRE_RDG_DATE_' + id).value;
+			var TARIFF = document.getElementById('TARIFF_' + id).value;
+
+			document.getElementById("Customer_No").value = Customer_No;
+			document.getElementById("WALK_SEQ").value = WALK_SEQ;
+			document.getElementById("CUSTOMER_NAME").value = CUSTOMER_NAME;
+			document.getElementById("METER_NUM").value = METER_NUM;
+			document.getElementById("PRE_RDG_DATE").value = PRE_RDG_DATE;
+			document.getElementById("TARIFF").value = TARIFF;
+
+		}
+
+
+	</script>
+
+
+</body>
+
+</html>

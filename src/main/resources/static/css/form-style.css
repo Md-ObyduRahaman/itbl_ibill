@@ -1,0 +1,90 @@
+
+/* ---------------------------------------------------
+FORM STYLE STARTS
+----------------------------------------------------- */
+
+
+input[type=text],
+input[type=email],
+input[type=date],
+select,
+textarea {
+  width: 100%;
+  /* background: #eaeaea90;
+  border: none;
+  border-radius: 10px;
+  box-sizing: border-box;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  padding: 7px 20px;
+  border: 1px solid #eaeaea;
+  box-shadow: rgba(99, 99, 99, 0.1) 0px 2px 8px 0px; */
+}
+
+input,
+select,
+textarea {
+  outline: none;
+}
+
+label {
+  font-weight: 500;
+}
+
+.btn-submit {
+  background: #3ab54a;
+  color: #fff;
+  font-weight: 600;
+  /* width: 150px; */
+  padding: 8px 18px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.btn-submit:hover {
+  background: #2b9139;
+  color: #fff;
+}
+
+/* .container {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+} */
+
+.card-5 {
+  background: #fff;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+  -webkit-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+  -moz-box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+  box-shadow: 0px 8px 20px 0px rgba(0, 0, 0, 0.15);
+}
+
+.card-5 .card-heading {
+  padding: 20px 0;
+  background: #3ab54a;
+  color: #fff;
+  -webkit-border-top-left-radius: 10px;
+  -moz-border-radius-topleft: 10px;
+  border-top-left-radius: 10px;
+  -webkit-border-top-right-radius: 10px;
+  -moz-border-radius-topright: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card-heading h2 {
+  font-size: 24px;
+}
+
+.card-5 .card-body {
+  padding: 40px 70px;
+  padding-bottom: 73px;
+}
+
+/* ---------------------------------------------------
+FORM STYLE ENDS
+----------------------------------------------------- */
+
