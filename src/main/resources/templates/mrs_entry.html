@@ -30,10 +30,104 @@
 	<link rel="stylesheet" href="../css/main.css">
 	<link rel="stylesheet" href="../css/sidebar-themes.css">
 	<link rel="stylesheet" href="../css/form-style.css">
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	
+	    
 
 	<!-- datatable link  -->
 	<link href="https://cdn.datatables.net/1.10.25/css/jquery.dataTables.min.css" rel="stylesheet" />
 	<style>
+		html {
+			box-sizing: border-box;
+		}
+
+		*,
+		*:before,
+		*:after {
+			box-sizing: inherit;
+		}
+
+		.intro {
+			max-width: 1280px;
+			margin: 1em auto;
+		}
+
+		.table-scroll {
+			position: relative;
+			width: 100%;
+			z-index: 1;
+			margin: auto;
+			overflow: auto;
+			height: 500px;
+		}
+
+		.table-scroll table {
+			width: 100%;
+			min-width: 1280px;
+			margin: auto;
+			border-collapse: separate;
+			border-spacing: 0;
+		}
+
+		.table-wrap {
+			position: relative;
+		}
+
+		.table-scroll thead th {
+
+			background-color: rgb(40, 136, 80);
+			color: white;
+			font-size: 0.8rem;
+			text-align: center;
+			border: 2px solid white;
+
+			position: -webkit-sticky;
+			position: sticky;
+			top: 0;
+		}
+
+		/* safari and ios need the tfoot itself to be position:sticky also */
+		.table-scroll tfoot,
+		.table-scroll tfoot th,
+		.table-scroll tfoot td {
+			position: -webkit-sticky;
+			position: sticky;
+			bottom: 0;
+			background: #666;
+			color: #fff;
+			z-index: 4;
+		}
+
+		a:focus {
+			background: red;
+		}
+
+		/* testing links*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		table {
 			table-layout: fixed;
 			border-collapse: collapse;
@@ -45,6 +139,7 @@
 			font-size: 0.8rem;
 			text-align: center;
 			border: 2px solid white;
+
 		}
 
 		tr {
@@ -59,6 +154,8 @@
 		#myTable th {
 			background-color: rgb(40, 136, 80);
 			color: white;
+			position: -webkit-sticky;
+			position: sticky;
 		}
 
 		#myTable td {
@@ -125,36 +222,7 @@
 			}
 		}
 
-		#SaveButton {
-			position: fixed;
-			bottom: 120px;
-			right: 25px;
-			z-index: 99;
-			font-size: 25px;
-			font-weight: 900;
-			padding: 2px 5px;
-			cursor: pointer;
-			text-align: center;
-			text-decoration: none;
-			outline: none;
-			color: red;
-			background-color: transparent;
-			border: none;
-			border-radius: 5px;
-		}
-
-		#SaveButton:hover {
-			background-color: #3e8e41;
-			color: #fff;
-			font-weight: normal;
-			box-shadow: 0 5px #999;
-		}
-
-		#SaveButton:active {
-			background-color: #3e8e41;
-			box-shadow: 0 5px #666;
-			transform: translateY(4px);
-		}
+		
 
 		.sticky {
 			position: -webkit-sticky;
@@ -207,7 +275,7 @@
 		<!-- page-content  -->
 		<main class="page-content">
 			<div id="overlay" class="overlay"></div>
-			<div class="container-fluid" style="padding: 0px;">
+			<div class="container-fluid h-100 d-inline-block" style="padding: 0px;">
 				<div class="title-bar"
 					style="height: 90px; background-image: url(../img/bn.jpeg) !important;background-repeat: no-repeat;width: 100%;height: 100%;background-size: cover;">
 					<a id="toggle-sidebar" class="btn btn-secondary rounded-0" href="#"
@@ -231,7 +299,7 @@
 							<div class="form-group col-md-1">
 								<label for="billCycle">Bill Cycle</label>
 								<!-- <input type="text" class="form-control" id="billCycle" placeholder="202204"> -->
-								<select id="billcycle" class="form-control" name="billcycle" required="required">
+								<select id="billcycle" class=" form-select js-example-basic-single js-states form-control input-group  billcycle" name="billcycle" required="required">
 									<option value="">Month</option>
 
 									<option th:each="b : ${billCycleModels}" th:value="${b.billcycle}"
@@ -297,81 +365,73 @@
 
 
 					</form>
-
-					<table id="myTable" class="table table-hover">
-						<thead>
-							<tr>
-
-								<!-- <th style="width: 50px;white-space:pre-line;">Walking Order</th> -->
-								<th rowspan="2"></th>
-								<th rowspan="2" style="width: 80px;white-space:pre-line;text-align: center;">Customer No
-								</th>
-								<th rowspan="2" style="width: 300px;white-space:pre-line;text-align: center;"><span
-										style="color:#E8630A;">Walking Order</span><span style="color:#F806CC;">
-										Customer Name</span>
-									<span style="color:#242F9B;"> Meter No</span><span style="color:#FA7D09;">
-										Tariff</span><span style="color:#581C0C;"> Pre Rdg. Date</span>
-								</th>
-
-								<th style="width: 270px;white-space:pre-line;" colspan="3">SR</th>
-								<th style="width: 270px;white-space:pre-line;" colspan="3">OFPK</th>
-								<th style="width: 270px;white-space:pre-line;" colspan="3">PK</th>
-
-								<th rowspan="2" style="width: 50px;white-space:pre-line;text-align: center;">Meter Con.
-								</th>
-								<th rowspan="2" style="width: 90px;white-space:pre-line;text-align: center;">Prv. Rdg.
-									Date</th>
-								<th rowspan="2"></th>
-							</tr>
-							<tr>
-
-								<th style="width: 90px;white-space:pre-line;">Present Reading</th>
-								<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
-								<th style="width: 90px;white-space:pre-line;">Advance</th>
-								<th style="width: 90px;white-space:pre-line;">Present Reading</th>
-								<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
-								<th style="width: 90px;white-space:pre-line;">Advance</th>
-								<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
-								<th style="width: 90px;white-space:pre-line;">Present Reading</th>
-								<th style="width: 90px;white-space:pre-line;">Advance</th>
-							</tr>
-
-						</thead>
-					</table>
-
 				</div>
 
 
-
-				<div style="overflow-y: scroll;" class="content ">
-
+				<div class="h-100 d-inline-block">
 					<form class="content h-50 d-inline-block" method="post" th:action="@{/updatemrs}"
 						th:object="${mrsEntryModels}">
-
-						<table id="myTable" class="table table-hover ">
-
-							<tbody>
-
-								<tr th:each="eachRow, iter : ${mrsEntryModels}">
-									<!-- <td style="width: 50px;padding:0;margin:0;" th:text="${eachRow.WALK_SEQ}"></td> -->
-									<td><input type="hidden" class="readonly" tabindex="-1" readonly="readonly"
-											th:value="${eachRow.CUST_ID}" name="CUST_ID" id="'CUST_ID" /></td>
+						<div id="table-scroll" class="table-scroll">
+							<table id="main-table" class="main-table">
+								<thead>
+									<tr>
+										<!-- <th style="width: 50px;white-space:pre-line;">Walking Order</th> -->
 
 
 
-								
-									<input type="hidden" th:id="'CUSTOMER_NUM_'+${iter.index}" name="CUSTOMER_NUM"
-										th:value="${eachRow.CUSTOMER_NUM}" />
-									<input type="hidden" th:id="'WALK_SEQ_'+${iter.index}" name="WALK_SEQ"
-										th:value="${eachRow.WALK_SEQ}" />
-									<input type="hidden" th:id="'CUSTOMER_NAME_'+${iter.index}" name="CUSTOMER_NAME"
-										th:value="${eachRow.CUSTOMER_NAME}" />
-									<input type="hidden" th:id="'METER_NUM_'+${iter.index}" name="METER_NUM"
-										th:value="${eachRow.METER_NUM}" />
-									<input type="hidden" th:id="'TARIFF_'+${iter.index}" name="TARIFF"
-										th:value="${eachRow.TARIFF}" />
-									<input type="hidden" th:id="'PRE_RDG_DATE_'+${iter.index}" name="PRE_RDG_DATE"
-										th:value="${eachRow.PRE_RDG_DATE}" />
+										<!-- <th style="width: 50px;white-space:pre-line;">Walking Order</th> -->
+
+
+										<th style="width: 270px;white-space:pre-line;" colspan="3">SR</th>
+										<th style="width: 270px;white-space:pre-line;" colspan="3">OFPK</th>
+										<th style="width: 270px;white-space:pre-line;" colspan="3">PK</th>
+
+										<th rowspan="2" style="width: 50px;white-space:pre-line;text-align: center;">
+											Meter Con.
+										</th>
+
+
+
+									</tr>
+									<tr style="position: sticky; top: 23px;">
+
+										<th style="width: 90px;white-space:pre-line;">Present Reading</th>
+										<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
+										<th style="width: 90px;white-space:pre-line;">Advance</th>
+										<th style="width: 90px;white-space:pre-line;">Present Reading</th>
+										<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
+										<th style="width: 90px;white-space:pre-line;">Advance</th>
+										<th style="width: 90px;white-space:pre-line;">Previous Reading</th>
+										<th style="width: 90px;white-space:pre-line;">Present Reading</th>
+										<th style="width: 90px;white-space:pre-line;">Advance</th>
+									</tr>
+
+								</thead>
+								<tbody>
+
+									<tr th:each="eachRow, iter : ${mrsEntryModels}">
+										<!-- <td style="width: 50px;padding:0;margin:0;" th:text="${eachRow.WALK_SEQ}"></td> -->
+										<input type="hidden" class="readonly" tabindex="-1" readonly="readonly"
+											th:value="${eachRow.CUST_ID}" name="CUST_ID" id="'CUST_ID" />
+
+
+
+
+
+										<input type="hidden" th:id="'CUSTOMER_NUM_'+${iter.index}" name="CUSTOMER_NUM"
+											th:value="${eachRow.CUSTOMER_NUM}" />
+										<input type="hidden" th:id="'WALK_SEQ_'+${iter.index}" name="WALK_SEQ"
+											th:value="${eachRow.WALK_SEQ}" />
+										<input type="hidden" th:id="'CUSTOMER_NAME_'+${iter.index}" name="CUSTOMER_NAME"
+											th:value="${eachRow.CUSTOMER_NAME}" />
+										<input type="hidden" th:id="'METER_NUM_'+${iter.index}" name="METER_NUM"
+											th:value="${eachRow.METER_NUM}" />
+										<input type="hidden" th:id="'TARIFF_'+${iter.index}" name="TARIFF"
+											th:value="${eachRow.TARIFF}" />
+										<input type="hidden" th:id="'PRE_RDG_DATE_'+${iter.index}" name="PRE_RDG_DATE"
+											th:value="${eachRow.PRE_RDG_DATE}" />
+										<input type="hidden" th:id="'PRV_RDG_DATE_'+${iter.index}" name="PRV_RDG_DATE"
+											th:value="${eachRow.PRV_RDG_DATE}" />
 
 
 
@@ -382,110 +442,136 @@
 
 
 
-									<td></td>
 
 
 
 
-									<td style="width: 300px;padding:0;margin:0;font-size: 12px;line-height: 1">
-										<span style="color:#E8630A;font-weight: bold;"
-											th:text="${eachRow.WALK_SEQ}+' '"></span><span
-											style="color:#F806CC;font-weight: bold;"
-											th:text="${eachRow.CUSTOMER_NAME}+' '"> </span>
-										<span style="color:#242F9B;font-weight: bold;"
-											th:text="${eachRow.METER_NUM}+' '"> </span><span
-											style="color:#FA7D09;font-weight: bold;" th:text="${eachRow.TARIFF}+' '">
-										</span><span style="color:#581C0C;font-weight: bold;"
-											th:text="${eachRow.PRE_RDG_DATE}"></span>
-									</td>
-									<!-- <td style="width: 90px;padding:0;margin:0;" th:text="${eachRow.METER_NUM}"></td>  -->
-									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
-											th:tabindex="${eachRow.TOD_CODE}=='02'?'-1'"
-											th:readonly="${eachRow.TOD_CODE}=='02'"
-											th:type="${eachRow.TOD_CODE}=='02'?'text':'input'"
-											th:value="${eachRow.PRE_READING}" name="PRE_READING"
-											th:id="'PRE_READING_'+${iter.index}"
-											th:onclick="'validateNumber0('+${iter.index}+')'"
-											th:onkeyup="'validateNumber0('+${iter.index}+')'" size="11" maxlength="11"
-											oninput="limitDecimalPlaces(event, 4)"></td>
-									<td style="width: 90px;padding:0;margin:0;text-align: right"><input class="readonly"
-											tabindex="-1" readonly="readonly" style="width: 90px;direction: rtl;"
-											type="text" th:value="${eachRow.PREV_READING}" name="PREV_READING"
-											th:id="'PREV_READING_'+${iter.index}"></td>
-									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
-											th:tabindex="${eachRow.TOD_CODE}=='02'?'-1'"
-											th:readonly="${eachRow.TOD_CODE}=='02'"
-											th:type="${eachRow.TOD_CODE}=='02'?'text':'input'" th:value="${eachRow.ADV}"
-											name="ADV" th:id="'ADV_'+${iter.index}"
-											th:onclick="'validateNumber0('+${iter.index}+')'"
-											th:onkeyup="'validateNumber0('+${iter.index}+')'" size="11" maxlength="11"
-											oninput="limitDecimalPlaces(event, 4)"></td>
-									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
-											th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
-											th:readonly="${eachRow.TOD_CODE}=='01'"
-											th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
-											th:value="${eachRow.PRE_OFPK_RDNG}" name="PRE_OFPK_RDNG"
-											th:id="'PRE_OFPK_RDNG_'+${iter.index}"
-											th:onclick="'validateNumber1('+${iter.index}+')'"
-											th:onkeyup="'validateNumber1('+${iter.index}+')'" size="11" maxlength="11"
-											oninput="limitDecimalPlaces(event, 4)"></td>
-									<td style="width: 90px;padding:0;margin:0;text-align: right"><input class="readonly"
-											tabindex="-1" readonly="readonly" style="width: 90px;direction: rtl;"
-											type="text" th:value="${eachRow.PREV_OFPK_RDNG}" name="PREV_OFPK_RDNG"
-											th:id="'PREV_OFPK_RDNG_'+${iter.index}"></td>
-									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
-											th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
-											th:readonly="${eachRow.TOD_CODE}=='01'"
-											th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
-											th:value="${eachRow.OFPK_ADV}" name="OFPK_ADV"
-											th:id="'OFPK_ADV_'+${iter.index}"
-											th:onclick="'validateNumber1('+${iter.index}+')'"
-											th:onkeyup="'validateNumber1('+${iter.index}+')'" size="11" maxlength="11"
-											oninput="limitDecimalPlaces(event, 4)"></td>
-									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
-											th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
-											th:readonly="${eachRow.TOD_CODE}=='01'"
-											th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
-											th:value="${eachRow.PRE_PK_RDNG}" name="PRE_PK_RDNG"
-											th:id="'PRE_PK_RDNG_'+${iter.index}" size="11" maxlength="11"
-											th:onclick="'validateNumber2('+${iter.index}+')'"
-											th:onkeyup="'validateNumber2('+${iter.index}+')'"
-											oninput="limitDecimalPlaces(event, 4)"></td>
-									<td style="width: 90px;padding:0;margin:0;text-align: right"><input class="readonly"
-											tabindex="-1" readonly="readonly" style="width: 90px;direction: rtl;"
-											th:onclick="'formDisplay('+${iter.index}+')'" type="text"
-											th:value="${eachRow.PREV_PK_RDNG}" name="PREV_PK_RDNG"
-											th:id="'PREV_PK_RDNG_'+${iter.index}"></td>
-									<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
-											th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
-											th:readonly="${eachRow.TOD_CODE}=='01'"
-											th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
-											th:value="${eachRow.PK_ADV}" name="PK_ADV" th:id="'PK_ADV_'+${iter.index}"
-											size="11" maxlength="11" th:onclick="'validateNumber2('+${iter.index}+')'"
-											th:onkeyup="'validateNumber2('+${iter.index}+')'"
-											oninput="limitDecimalPlaces(event, 4)"></td>
-									<td style="width: 50px;padding:0;margin:0;"><input style="width: 50px;" type="input"
-											th:value="${eachRow.MTR_COND}" name="MTR_COND" id="MTR_COND" size="2"
-											th:onclick="'formDisplay('+${iter.index}+')'" maxlength="2"></td>
-									<td style="width: 90px;padding:0;margin:0;text-align: center;"
-										th:text="${eachRow.PRV_RDG_DATE}"></td>
-									<td style="padding:0;margin:0;"><input type="hidden"
-											th:value="${eachRow.BILL_CYCLE_CODE}" name="BILL_CYCLE_CODE"
-											id="BILL_CYCLE_CODE"></td>
+										<!-- <td style="width: 90px;padding:0;margin:0;" th:text="${eachRow.METER_NUM}"></td>  -->
+										<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+												th:tabindex="${eachRow.TOD_CODE}=='02'?'-1'"
+												th:readonly="${eachRow.TOD_CODE}=='02'"
+												th:type="${eachRow.TOD_CODE}=='02'?'text':'input'"
+												th:value="${eachRow.PRE_READING}" name="PRE_READING"
+												th:id="'PRE_READING_'+${iter.index}"
+												th:onclick="'validateNumber0('+${iter.index}+')'"
+												th:onkeyup="'validateNumber0('+${iter.index}+')'" size="11"
+												maxlength="11" oninput="limitDecimalPlaces(event, 4)"></td>
+										<td style="width: 90px;padding:0;margin:0;text-align: right"><input
+												class="readonly" tabindex="-1" readonly="readonly"
+												style="width: 90px;direction: rtl;" type="text"
+												th:value="${eachRow.PREV_READING}" name="PREV_READING"
+												th:id="'PREV_READING_'+${iter.index}"></td>
+										<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+												th:tabindex="${eachRow.TOD_CODE}=='02'?'-1'"
+												th:readonly="${eachRow.TOD_CODE}=='02'"
+												th:type="${eachRow.TOD_CODE}=='02'?'text':'input'"
+												th:value="${eachRow.ADV}" name="ADV" th:id="'ADV_'+${iter.index}"
+												th:onclick="'validateNumber0('+${iter.index}+')'"
+												th:onkeyup="'validateNumber0('+${iter.index}+')'" size="11"
+												maxlength="11" oninput="limitDecimalPlaces(event, 4)"></td>
+										<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+												th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
+												th:readonly="${eachRow.TOD_CODE}=='01'"
+												th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
+												th:value="${eachRow.PRE_OFPK_RDNG}" name="PRE_OFPK_RDNG"
+												th:id="'PRE_OFPK_RDNG_'+${iter.index}"
+												th:onclick="'validateNumber1('+${iter.index}+')'"
+												th:onkeyup="'validateNumber1('+${iter.index}+')'" size="11"
+												maxlength="11" oninput="limitDecimalPlaces(event, 4)"></td>
+										<td style="width: 90px;padding:0;margin:0;text-align: right"><input
+												class="readonly" tabindex="-1" readonly="readonly"
+												style="width: 90px;direction: rtl;" type="text"
+												th:value="${eachRow.PREV_OFPK_RDNG}" name="PREV_OFPK_RDNG"
+												th:id="'PREV_OFPK_RDNG_'+${iter.index}"></td>
+										<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+												th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
+												th:readonly="${eachRow.TOD_CODE}=='01'"
+												th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
+												th:value="${eachRow.OFPK_ADV}" name="OFPK_ADV"
+												th:id="'OFPK_ADV_'+${iter.index}"
+												th:onclick="'validateNumber1('+${iter.index}+')'"
+												th:onkeyup="'validateNumber1('+${iter.index}+')'" size="11"
+												maxlength="11" oninput="limitDecimalPlaces(event, 4)"></td>
+										<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+												th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
+												th:readonly="${eachRow.TOD_CODE}=='01'"
+												th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
+												th:value="${eachRow.PRE_PK_RDNG}" name="PRE_PK_RDNG"
+												th:id="'PRE_PK_RDNG_'+${iter.index}" size="11" maxlength="11"
+												th:onclick="'validateNumber2('+${iter.index}+')'"
+												th:onkeyup="'validateNumber2('+${iter.index}+')'"
+												oninput="limitDecimalPlaces(event, 4)"></td>
+										<td style="width: 90px;padding:0;margin:0;text-align: right"><input
+												class="readonly" tabindex="-1" readonly="readonly"
+												style="width: 90px;direction: rtl;"
+												th:onclick="'formDisplay('+${iter.index}+')'" type="text"
+												th:value="${eachRow.PREV_PK_RDNG}" name="PREV_PK_RDNG"
+												th:id="'PREV_PK_RDNG_'+${iter.index}"></td>
+										<td style="width: 90px;padding:0;margin:0;"><input style="width: 90px;"
+												th:tabindex="${eachRow.TOD_CODE}=='01'?'-1'"
+												th:readonly="${eachRow.TOD_CODE}=='01'"
+												th:type="${eachRow.TOD_CODE}=='01'?'text':'input'"
+												th:value="${eachRow.PK_ADV}" name="PK_ADV"
+												th:id="'PK_ADV_'+${iter.index}" size="11" maxlength="11"
+												th:onclick="'validateNumber2('+${iter.index}+')'"
+												th:onkeyup="'validateNumber2('+${iter.index}+')'"
+												oninput="limitDecimalPlaces(event, 4)"></td>
+										<td style="width: 50px;padding:0;margin:0;"><input style="width: 50px;"
+												type="input" th:value="${eachRow.MTR_COND}" name="MTR_COND"
+												id="MTR_COND" size="2" th:onclick="'formDisplay('+${iter.index}+')'"
+												maxlength="2"></td>
 
-								</tr>
+
+										<p style="padding:0;margin:0;"><input type="hidden"
+												th:value="${eachRow.BILL_CYCLE_CODE}" name="BILL_CYCLE_CODE"
+												id="BILL_CYCLE_CODE"></p>
+
+									</tr>
 
 
 
-							</tbody>
+								</tbody>
 
-						</table>
-						<input type="submit" value="Save" id="SaveButton" th:if="${flag} == '1' ">
+								<tfoot>
+									<tr>
+										<th>Customer No</th>
+										<td style="background-color: yellowgreen;"><input
+												class="form-control Customer_No" id="Customer_No" readonly></td>
+										<th>Walking Order</th>
+										<td style="background-color: yellowgreen;"><input
+												class="form-control Customer_No" id="WALK_SEQ" readonly></td>
+										<th>Customer Name</th>
+										<td style="background-color: yellowgreen;"><input
+												class="form-control Customer_No" id="CUSTOMER_NAME" readonly></td>
+										<th>Meter No</th>
+										<td style="background-color: yellowgreen;"><input
+												class="form-control Customer_No" id="METER_NUM" readonly></td>
+										<th>Tariff</th>
+										<td style="background-color: yellowgreen;"><input
+												class="form-control Customer_No" id="TARIFF" readonly></td>
+
+									</tr>
+									<tr>
+										<th colspan="2">Pre Rdg. Date</th>
+										<td colspan="2" style="background-color: yellowgreen;"><input
+												class="form-control " id="PRE_RDG_DATE" readonly></td>
+										<th colspan="2">Prv. Rdg. Date</th>
+										<td colspan="2" style="background-color: yellowgreen;"><input
+												class="form-control " id="PRV_RDG_DATE" readonly></td>
+										<td colspan="2"><button type="submit" id="SaveButton" value="Save" th:if="${flag} == '1'"
+												class="btn btn-primary btn-block">Save All</button></td>
+									</tr>
+
+								</tfoot>
+							</table>
+						</div>
+
 					</form>
-
-
 				</div>
-				<button onclick="topFunction()" id="myBtn" title="Go to top">^</button>
+
+
+
+
 
 
 				<!-- Modal -->
@@ -560,7 +646,52 @@
 			</div>
 
 
-			<div class="row">
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+			<div class="row" style="display: none;">
 				<footer class="bg-blue text-center text-lg-start  position-fixed fixed-bottom  "
 					style="background-color: transparent;">
 					<div class="container">
@@ -1124,6 +1255,7 @@
 			var METER_NUM = document.getElementById('METER_NUM_' + id).value;
 			var PRE_RDG_DATE = document.getElementById('PRE_RDG_DATE_' + id).value;
 			var TARIFF = document.getElementById('TARIFF_' + id).value;
+			var PRV_RDG_DATE = document.getElementById('PRV_RDG_DATE_' + id).value;
 
 			document.getElementById("Customer_No").value = Customer_No;
 			document.getElementById("WALK_SEQ").value = WALK_SEQ;
@@ -1131,12 +1263,19 @@
 			document.getElementById("METER_NUM").value = METER_NUM;
 			document.getElementById("PRE_RDG_DATE").value = PRE_RDG_DATE;
 			document.getElementById("TARIFF").value = TARIFF;
+			document.getElementById("PRV_RDG_DATE").value = PRV_RDG_DATE;
 
 		}
 
 
-	</script>
 
+
+		$('.billcycle').select2();
+
+
+	</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 </body>
 
